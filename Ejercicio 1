@@ -1,1 +1,46 @@
 
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Importar el archivo CSV
+df = pd.read_csv('nba.csv')  # Reemplaza 'tu_archivo.csv' con el nombre de tu archivo
+
+# 2. Modificar el campo nombre por jugador
+df = df.rename(columns={'nombre': 'jugador'})
+
+# 3. Imprimir el dataframe (opcional, para verificar)
+print(df)
+
+# 4. Menú de opciones para el usuario
+while True:
+    print("\n¿Qué deseas hacer?")
+    print("1. Ver todos los jugadores")
+    print("2. Ver detalle por jugador")
+    print("3. Ver el puntaje general")
+    print("4. Graficar")
+    print("5. Salir")
+
+    opcion = input("Ingresa el número de la opción: ")
+
+    if opcion == '1':
+        print("Nombres de los jugadores:")
+        print(df['jugador'])
+    elif opcion == '2':
+        nombre_jugador = input("Ingrese el nombre del jugador: ")
+        jugador = df[df['jugador'] == nombre_jugador]
+        print(jugador)
+    elif opcion == '3':
+        puntaje_promedio = df['puntos'].mean()
+        print("El puntaje promedio es:", puntaje_promedio)
+    elif opcion == '4':
+        plt.figure(figsize=(10, 10))
+        plt.bar(df['jugador'], df['puntos'], color='green')
+        plt.xlabel('Jugador')
+        plt.ylabel('Puntos')
+        plt.title('Puntos por jugador')
+        plt.xticks(rotation=45)
+        plt.show()
+    elif opcion == '5':
+        break
+    else:
+        print("Opción inválida. Intenta nuevamente.")
